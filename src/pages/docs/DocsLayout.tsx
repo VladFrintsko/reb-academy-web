@@ -1,7 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { DocsSidebar } from "./components/DocsSidebar";
-import { DocsTopbar } from "./components/DocsTopbar";
-import { DocsToc } from "./components/DocsToc";
+import { DocsSidebar, DocsToc, DocsTopbar } from "./components";
 
 export function DocsLayout() {
     return (
