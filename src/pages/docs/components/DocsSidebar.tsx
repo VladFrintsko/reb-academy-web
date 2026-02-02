@@ -16,8 +16,7 @@ export const DocsSidebar = () => {
                 key={item.to}
                 to={item.to}
                 className={({ isActive }) =>
-                  `block rounded-lg px-3 py-2 hover:bg-white/5 ${
-                    isActive ? "bg-white/10" : ""
+                  `block rounded-lg px-3 py-2 hover:bg-white/5 ${isActive ? "bg-white/10" : ""
                   }`
                 }
               >

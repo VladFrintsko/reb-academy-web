@@ -1,3 +1,4 @@
-export { DocsTopbar } from "./DocsTopbar"
-export { DocsToc } from "./DocsToc"
 export { DocsSidebar } from "./DocsSidebar"
+export { DocsToc } from "./DocsToc"
+export { DocsTopbar } from "./DocsTopbar"
+

@@ -11,7 +11,7 @@ export function DocsLayout() {
                 <div className="grid grid-cols-[260px_minmax(0,1fr)_260px] gap-10">
 
                     {/* LEFT */}
-                    <aside className="sticky top-16 h-[calc(100vh-64px)] overflow-y-auto py-8">
+                    <aside className="sticky top-16 h-[calc(100vh-64px)] overflow-y-auto py-8 border-r">
                         <DocsSidebar />
                     </aside>
 
