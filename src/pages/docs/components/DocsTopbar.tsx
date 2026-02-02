@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type ChangeEvent } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import transparentWaveGuard from "../../../assets/white_logo.png";
 import { useAuth } from "../../../contexts/AuthContext";
@@ -24,7 +24,7 @@ const searchableItems: SearchItem[] = [
     { title: "Головна", description: "Головна сторінка Wave Hub", to: "/", category: "Навігація" },
 ];
 
-export function DocsTopbar() {
+export const DocsTopbar = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(0);
@@ -105,6 +105,18 @@ export function DocsTopbar() {
         return () => document.removeEventListener("keydown", handleGlobalKeyDown);
     }, []);
 
+    const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const handleFocus = () => {
+        setIsSearchOpen(true);
+    };
+
+    const handleMouseEnter = (index: number) => () => {
+        setSelectedIndex(index);
+    };
+
     return (
         <header className="border-b">
             <div className="mx-auto flex w-full max-w-[1400px] items-center justify-between gap-5 px-6 py-1">
@@ -138,8 +150,8 @@ export function DocsTopbar() {
                             ref={inputRef}
                             type="text"
                             value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            onFocus={() => setIsSearchOpen(true)}
+                            onChange={handleSearchChange}
+                            onFocus={handleFocus}
                             onKeyDown={handleKeyDown}
                             placeholder="Пошук..."
                             className="w-64 rounded-md border border-white/10 bg-white/5 px-3 py-2 pr-16 text-sm outline-none transition-colors focus:border-white/30 focus:bg-white/10"
@@ -157,7 +169,7 @@ export function DocsTopbar() {
                                         <li key={item.to}>
                                             <button
                                                 onClick={() => handleSelect(item)}
-                                                onMouseEnter={() => setSelectedIndex(index)}
+                                                onMouseEnter={handleMouseEnter(index)}
                                                 className={`flex w-full flex-col gap-0.5 px-4 py-3 text-left transition-colors ${index === selectedIndex
                                                     ? "bg-white/10"
                                                     : "hover:bg-white/5"
