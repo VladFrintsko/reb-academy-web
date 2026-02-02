@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import transparentWaveGuard from "../../../assets/white_logo.png";
+import { useAuth } from "../../../contexts/AuthContext";
 
 const navItems = [
     { label: "Документація", to: "/docs/quickstart" },
@@ -30,6 +31,12 @@ export function DocsTopbar() {
     const searchRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
+    const { user, signOut } = useAuth();
+
+    const handleSignOut = async () => {
+        await signOut();
+        navigate("/");
+    };
 
     const filteredResults = searchQuery.trim()
         ? searchableItems.filter(
@@ -125,7 +132,7 @@ export function DocsTopbar() {
                     </nav>
                 </div>
 
-                <div ref={searchRef} className="relative flex items-center gap-2 py-2">
+                <div ref={searchRef} className="relative flex items-center gap-4 py-2">
                     <div className="relative">
                         <input
                             ref={inputRef}
@@ -152,8 +159,8 @@ export function DocsTopbar() {
                                                 onClick={() => handleSelect(item)}
                                                 onMouseEnter={() => setSelectedIndex(index)}
                                                 className={`flex w-full flex-col gap-0.5 px-4 py-3 text-left transition-colors ${index === selectedIndex
-                                                        ? "bg-white/10"
-                                                        : "hover:bg-white/5"
+                                                    ? "bg-white/10"
+                                                    : "hover:bg-white/5"
                                                     }`}
                                             >
                                                 <div className="flex items-center gap-2">
@@ -178,6 +185,22 @@ export function DocsTopbar() {
                                 <span>esc закрити</span>
                             </div>
                         </div>
+                    )}
+
+                    {user ? (
+                        <button
+                            onClick={handleSignOut}
+                            className="rounded-md border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+                        >
+                            Вийти
+                        </button>
+                    ) : (
+                        <Link
+                            to="/login"
+                            className="rounded-md border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+                        >
+                            Увійти
+                        </Link>
                     )}
                 </div>
             </div>

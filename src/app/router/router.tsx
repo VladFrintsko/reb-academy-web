@@ -1,4 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
+import { ProtectedRoute } from "../../components/ProtectedRoute";
+import { LoginPage } from "../../pages/auth/LoginPage";
 import { DocsLayout } from "../../pages/docs/DocsLayout";
 import { DocsPage } from "../../pages/docs/DocsPage";
 import { ErrorPage } from "../../pages/error/ErrorPage";
@@ -16,12 +18,24 @@ export const router = createBrowserRouter([
                 element: <HomePage />,
             },
             {
+                path: "/login",
+                element: <LoginPage />,
+            },
+            {
                 path: "/pdf-generator",
-                element: <PdfGeneratorPage />,
+                element: (
+                    <ProtectedRoute>
+                        <PdfGeneratorPage />
+                    </ProtectedRoute>
+                ),
             },
             {
                 path: "/docs",
-                element: <DocsLayout />,
+                element: (
+                    <ProtectedRoute>
+                        <DocsLayout />
+                    </ProtectedRoute>
+                ),
                 children: [
                     { path: "quickstart", element: <DocsPage /> },
                 ],
